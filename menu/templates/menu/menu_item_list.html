@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Menu -->
+<div class="container py-5" id="menu">
+    <h2 class="text-center mb-4">Our Menu</h2>
+    <p class="text-secondary mb-5 text-center">Explore our diverse menu, crafted with passion and the finest ingredients. From hearty breakfasts to delightful dinners, our dishes are designed to please every palate. Whether you're here for a casual meal or a special occasion, we have something delicious waiting for you!</p>
+
+    <!-- Menu Tabs -->
+    <ul class="nav nav-pills justify-content-center mb-4" id="menu-tabs" role="tablist">
+        {% for category, page_obj in menu_items_by_category %}
+        <li class="nav-item" role="presentation">
+            <a class="nav-link {% if forloop.first %}active{% endif %}" id="{{ category.name|slugify }}-tab" data-bs-toggle="pill" href="#{{ category.name|slugify }}" role="tab" aria-controls="{{ category.name|slugify }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">{{ category.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    
+    <!-- Menu Content -->
+    <div class="tab-content" id="menuContent">
+        {% for category, page_obj in menu_items_by_category %}
+        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="{{ category.name|slugify }}" role="tabpanel" aria-labelledby="{{ category.name|slugify }}-tab">
+            <div class="row row-cols-1 row-cols-md-3 g-3">
+                {% for item in page_obj %}
+                <div class="col">
+                    <div class="card h-100">
+                        {% if "placeholder" in item.image.url %}
+                        <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="placeholder image">
+                        {% else %}
+                        <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <div class="card-text">{{ item.description|safe }}</div>
+                            <p class="card-text"><strong>${{ item.price }}</strong></p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-center">No items available in this category.</p>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="d-flex justify-content-center mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?{{ category.name|slugify }}_page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% for num in page_obj.paginator.page_range %}
+                        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                            <a class="page-link" href="?{{ category.name|slugify }}_page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?{{ category.name|slugify }}_page={{ page_obj.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
