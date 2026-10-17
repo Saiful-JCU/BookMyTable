@@ -23,10 +23,10 @@
                 {% for item in page_obj %}
                 <div class="col">
                     <div class="card h-100">
-                        {% if "placeholder" in item.image.url %}
-                        <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="placeholder image">
-                        {% else %}
+                        {% if item.image %}
                         <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                        {% else %}
+                        <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="placeholder image">
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ item.name }}</h5>

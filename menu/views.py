@@ -30,7 +30,7 @@ class MenuItemListView(TemplateView):
 
         menu_items_by_category = []
         for category in categories:
-            items = MenuItem.objects.filter(category=category)
+            items = MenuItem.objects.filter(category=category).order_by('id')
             paginator = Paginator(items, 9)
             page_number = self.request.GET.get(
                 f'{slugify(category.name)}_page', 1)
