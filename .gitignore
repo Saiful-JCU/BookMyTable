@@ -1,9 +1,70 @@
-core.Microsoft*
-core.mongo*
-core.python*
-env.py
+# ==========================================
+# Python Cache and Compiled Artifacts
+# ==========================================
 __pycache__/
 *.py[cod]
-node_modules/
-.github/
-cloudinary_python.txt
+*.so
+
+# ==========================================
+# Django Specific Exclusions
+# ==========================================
+# Ignore local settings if you use them for secrets
+local_settings.py
+
+# User-uploaded files (Media directory)
+media/
+
+# Collected static files (Uncomment if you collect static locally)
+# static/
+# static_cdn/
+
+# ==========================================
+# Databases & Logs
+# ==========================================
+# Local SQLite database files
+*.sqlite3
+*.db
+
+# Log files
+*.log
+pip-log.txt
+
+# ==========================================
+# Environments & Secrets
+# ==========================================
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment variable files containing secrets
+.env
+.env.*
+
+# ==========================================
+# Testing & Coverage
+# ==========================================
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+.mypy_cache/
+
+# ==========================================
+# IDEs and Text Editors
+# ==========================================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+
+# ==========================================
+# OS Generated Files
+# ==========================================
+.DS_Store
+Thumbs.db
